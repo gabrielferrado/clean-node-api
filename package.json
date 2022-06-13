@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test": "jest --passWithNoTests --noStackTrace --runInBand",
     "test:verbose": "npm test -- --watch",
-    "test:unit": "npm test -- --watch -c jest-unit.config.js",
+    "test:unit": "npm test --  --silent --watch -c jest-unit.config.js",
     "test:integration": "npm test -- --watch --silent --noStackTrace -c jest-integration.config.js",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage"
