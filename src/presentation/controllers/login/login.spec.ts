@@ -1,8 +1,7 @@
 import { LoginController } from './login'
+import { EmailValidator, Authenticator } from './login-protocols'
 import { badRequest, serverError, unauthorized } from '../../helpers/http-helpers'
 import { InvalidParamError, MissingParamError } from '../../errors'
-import { EmailValidator } from '../../protocols/email-validator'
-import { Authenticator } from '../../../domain/usecases/authenticator'
 
 const DEFAULT_HTTP_REQUEST = {
   body: {
