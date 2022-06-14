@@ -1,6 +1,22 @@
 import { LogControllerDecorator } from './log'
 import { Controller, HttpRequest, HttpResponse } from '../../presentation/protocols'
 
+const BASE_RESPONSE = {
+  statusCode: 200,
+  body: {
+    hello: 'World'
+  }
+}
+
+const BASE_REQUEST = {
+  body: {
+    name: 'valid_name',
+    email: 'valid_email',
+    password: 'valid_password',
+    passwordConfirmation: 'valid_password'
+  }
+}
+
 interface SutTypes {
   sut: LogControllerDecorator
   controllerStub: Controller
@@ -9,13 +25,7 @@ interface SutTypes {
 const makeControllerStub = (): Controller => {
   class ControllerStub implements Controller {
     async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-      const httpResponse = {
-        statusCode: 200,
-        body: {
-          hello: 'World'
-        }
-      }
-      return Promise.resolve(httpResponse)
+      return Promise.resolve(BASE_RESPONSE)
     }
   }
   return new ControllerStub()
@@ -35,15 +45,13 @@ describe('LogController Decorator', function () {
   test('Should call controller handle', async () => {
     const { sut, controllerStub } = makeSut()
     const handleSpy = jest.spyOn(controllerStub, 'handle')
-    const httpRequest = {
-      body: {
-        name: 'valid_name',
-        email: 'valid_email',
-        password: 'valid_password',
-        passwordConfirmation: 'valid_password'
-      }
-    }
-    await sut.handle(httpRequest)
-    expect(handleSpy).toHaveBeenCalledWith(httpRequest)
+    await sut.handle(BASE_REQUEST)
+    expect(handleSpy).toHaveBeenCalledWith(BASE_REQUEST)
+  })
+
+  test('Should return the same result of the controller', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(BASE_REQUEST)
+    expect(httpResponse).toEqual(BASE_RESPONSE)
   })
 })
