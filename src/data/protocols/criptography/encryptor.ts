@@ -1,3 +1,5 @@
+import { AccountModel } from '../../../domain/models/account'
+
 export interface Encryptor {
-  encrypt: (value: string) => Promise<string>
+  generate: (account: AccountModel) => Promise<string>
 }

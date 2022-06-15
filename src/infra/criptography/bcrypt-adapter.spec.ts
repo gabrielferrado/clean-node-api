@@ -18,13 +18,13 @@ describe('BCrypt Adapter', function () {
   test('Should call bcrypt with correct value', async () => {
     const sut = makeSut()
     const hashSpy = jest.spyOn(bcrypt, 'hash')
-    await sut.encrypt(DEFAULT_VALUE)
+    await sut.hash(DEFAULT_VALUE)
     expect(hashSpy).toHaveBeenCalledWith(DEFAULT_VALUE, SALT)
   })
 
   test('Should a hash on success', async () => {
     const sut = makeSut()
-    const hash = await sut.encrypt(DEFAULT_VALUE)
+    const hash = await sut.hash(DEFAULT_VALUE)
     expect(hash).toBe('hash')
   })
 })
