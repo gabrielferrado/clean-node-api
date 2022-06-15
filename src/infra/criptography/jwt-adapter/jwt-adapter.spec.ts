@@ -14,17 +14,30 @@ const VALID_ACCOUNT = {
   id: 'any_id'
 }
 
+const makeSut = (): JwtAdapter => {
+  return new JwtAdapter('secret')
+}
+
 describe('JWT Adapter', function () {
   test('Should call sign with correct values', async () => {
-    const sut = new JwtAdapter('secret')
+    const sut = makeSut()
     const signSpy = jest.spyOn(jwt, 'sign')
     await sut.encrypt(VALID_ACCOUNT)
     expect(signSpy).toHaveBeenCalledWith(VALID_ACCOUNT , 'secret')
   })
 
   test('Should return a token on sign success', async () => {
-    const sut = new JwtAdapter('secret')
+    const sut = makeSut()
     const accessToken = await sut.encrypt(VALID_ACCOUNT)
     expect(accessToken).toBe('any_token')
+  })
+
+  test('Should throw if sign throws', async () => {
+    const sut = makeSut()
+    jest.spyOn(jwt, 'sign').mockImplementationOnce(
+      () => { throw new Error() }
+    )
+    const promise = sut.encrypt(VALID_ACCOUNT)
+    await expect(promise).rejects.toThrow()
   })
 })
