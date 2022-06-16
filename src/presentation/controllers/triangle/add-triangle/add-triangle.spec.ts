@@ -1,5 +1,5 @@
 import { AddTriangleController } from './add-triangle-controller'
-import { Validator } from './add-triangle-controller-protocols'
+import { AddTriangle, AddTriangleModel, TriangleModel, Validator } from './add-triangle-controller-protocols'
 import { badRequest } from '../../../helpers/http/http-helpers'
 
 const VALID_BODY = {
@@ -9,6 +9,11 @@ const VALID_BODY = {
 }
 const VALID_HTTP_REQUEST = {
   body: VALID_BODY
+}
+const VALID_TRIANGLE = {
+  id: 'any_id',
+  type: 'any_type',
+  sides: [3,4,5]
 }
 
 const makeValidator = (): Validator => {
@@ -20,17 +25,29 @@ const makeValidator = (): Validator => {
   return new ValidatorStub()
 }
 
+const makeAddTriangle = (): AddTriangle => {
+  class AddTriangleStub implements AddTriangle {
+    async add (data: AddTriangleModel): Promise<TriangleModel> {
+      return Promise.resolve(VALID_TRIANGLE)
+    }
+  }
+  return new AddTriangleStub()
+}
+
 interface SutTypes {
   sut: AddTriangleController
   validatorStub: Validator
+  addTriangleStub: AddTriangle
 }
 
 const makeSut = (): SutTypes => {
   const validatorStub = makeValidator()
-  const sut = new AddTriangleController(validatorStub)
+  const addTriangleStub = makeAddTriangle()
+  const sut = new AddTriangleController(validatorStub, addTriangleStub)
   return {
     sut,
-    validatorStub
+    validatorStub,
+    addTriangleStub
   }
 }
 
@@ -47,5 +64,12 @@ describe('AddTriangle Controller', function () {
     jest.spyOn(validatorStub, 'validate').mockReturnValueOnce(new Error())
     const httpResponse = await sut.handle(VALID_HTTP_REQUEST)
     expect(httpResponse).toEqual(badRequest(new Error()))
+  })
+
+  test('Should call AddTriangle with correct values', async () => {
+    const { sut, addTriangleStub } = makeSut()
+    const addTriangleSpy = jest.spyOn(addTriangleStub, 'add')
+    await sut.handle(VALID_HTTP_REQUEST)
+    expect(addTriangleSpy).toHaveBeenCalledWith(VALID_BODY)
   })
 })
