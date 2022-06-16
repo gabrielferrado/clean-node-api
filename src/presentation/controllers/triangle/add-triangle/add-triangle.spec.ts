@@ -1,6 +1,7 @@
 import { AddTriangleController } from './add-triangle-controller'
 import { AddTriangle, AddTriangleModel, TriangleModel, Validator } from './add-triangle-controller-protocols'
-import { badRequest, ok } from '../../../helpers/http/http-helpers'
+import { badRequest, ok, serverError } from '../../../helpers/http/http-helpers'
+import { ServerError } from '../../../errors'
 
 const VALID_BODY = {
   side1: 2,
@@ -77,5 +78,15 @@ describe('AddTriangle Controller', function () {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(VALID_HTTP_REQUEST)
     expect(httpResponse).toEqual(ok(VALID_TRIANGLE))
+  })
+
+  test('Should return 500 if add triangle fails', async () => {
+    const { sut, addTriangleStub } = makeSut()
+    jest.spyOn(addTriangleStub, 'add')
+      .mockImplementationOnce(async () => {
+        return Promise.reject(new Error())
+      })
+    const httpResponse = await sut.handle(VALID_HTTP_REQUEST)
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 })
