@@ -13,8 +13,7 @@ services:
     build: .
     image: clean-node-api
     restart: always
-    command:
-      - npm start
+    command: node dist/main/server.js
     volumes:
       - ./dist:/usr/app/clean-node-api/dist
     ports:
