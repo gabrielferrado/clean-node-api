@@ -7,6 +7,7 @@ const VALID_SIDES = {
   side3: 1
 }
 const VALID_TRIANGLE = {
+  id: 'any_id',
   type: 'any_type',
   sides: [3,4,5]
 }
@@ -14,7 +15,7 @@ const VALID_TRIANGLE = {
 const makeAddTriangleRepository = (): AddTriangleRepository => {
   class AddTriangleRepositoryStub implements AddTriangleRepository {
     async add (triangleData: AddTriangleModel): Promise<TriangleModel> {
-      return Promise.resolve({ id: 'any_id', ...VALID_TRIANGLE })
+      return Promise.resolve(VALID_TRIANGLE)
     }
   }
   return new AddTriangleRepositoryStub()
@@ -49,5 +50,11 @@ describe('DbAddTriangle UseCase', function () {
     )
     const promise = sut.add(VALID_SIDES)
     await expect(promise).rejects.toThrow()
+  })
+
+  test('Should return a triangle on success', async () => {
+    const { sut } = makeSut()
+    const account = await sut.add(VALID_SIDES)
+    expect(account).toEqual(VALID_TRIANGLE)
   })
 })
