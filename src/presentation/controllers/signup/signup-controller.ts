@@ -20,6 +20,7 @@ export class SignUpController implements Controller {
         email,
         password
       })
+      account.password = undefined
 
       return ok(account)
     } catch (e) {
