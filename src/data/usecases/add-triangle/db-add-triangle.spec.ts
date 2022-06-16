@@ -41,4 +41,13 @@ describe('DbAddTriangle UseCase', function () {
     await sut.add(VALID_SIDES)
     expect(addSpy).toHaveBeenCalledWith(VALID_SIDES)
   })
+
+  test('Should throw if AddTriangleRepository throws', async () => {
+    const { sut, addTriangleRepositoryStub } = makeSut()
+    jest.spyOn(addTriangleRepositoryStub, 'add').mockReturnValueOnce(
+      Promise.reject(new Error())
+    )
+    const promise = sut.add(VALID_SIDES)
+    await expect(promise).rejects.toThrow()
+  })
 })
