@@ -6,7 +6,6 @@ export class DbAddTriangle implements AddTriangle {
   ) {}
 
   async add (data: AddTriangleModel): Promise<TriangleModel> {
-    await this.addTriangleRepository.add(data)
-    return Promise.resolve(undefined)
+    return this.addTriangleRepository.add(data)
   }
 }
