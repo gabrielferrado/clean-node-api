@@ -1,6 +1,6 @@
 import { AddTriangleController } from './add-triangle-controller'
 import { AddTriangle, AddTriangleModel, TriangleModel, Validator } from './add-triangle-controller-protocols'
-import { badRequest } from '../../../helpers/http/http-helpers'
+import { badRequest, ok } from '../../../helpers/http/http-helpers'
 
 const VALID_BODY = {
   side1: 2,
@@ -71,5 +71,11 @@ describe('AddTriangle Controller', function () {
     const addTriangleSpy = jest.spyOn(addTriangleStub, 'add')
     await sut.handle(VALID_HTTP_REQUEST)
     expect(addTriangleSpy).toHaveBeenCalledWith(VALID_BODY)
+  })
+
+  test('Should return 200 if valid data is provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(VALID_HTTP_REQUEST)
+    expect(httpResponse).toEqual(ok(VALID_TRIANGLE))
   })
 })
