@@ -1,5 +1,6 @@
 import { AddTriangleController } from './add-triangle-controller'
 import { Validator } from './add-triangle-controller-protocols'
+import { badRequest } from '../../../helpers/http/http-helpers'
 
 const VALID_BODY = {
   side1: 2,
@@ -39,5 +40,12 @@ describe('AddTriangle Controller', function () {
     const validateSpy = jest.spyOn(validatorStub, 'validate')
     await sut.handle(VALID_HTTP_REQUEST)
     expect(validateSpy).toHaveBeenCalledWith(VALID_BODY)
+  })
+
+  test('Should return 400 if Validator fails', async () => {
+    const { sut, validatorStub } = makeSut()
+    jest.spyOn(validatorStub, 'validate').mockReturnValueOnce(new Error())
+    const httpResponse = await sut.handle(VALID_HTTP_REQUEST)
+    expect(httpResponse).toEqual(badRequest(new Error()))
   })
 })
