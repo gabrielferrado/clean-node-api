@@ -3,10 +3,7 @@ import { AccountModel } from '../../../domain/models/account'
 import jwt from 'jsonwebtoken'
 
 export class JwtAdapter implements Encryptor {
-  private readonly secret: string
-  constructor (secret: string) {
-    this.secret = secret
-  }
+  constructor (private readonly secret: string) {}
 
   async encrypt (account: AccountModel): Promise<string> {
     return jwt.sign(account, this.secret)
