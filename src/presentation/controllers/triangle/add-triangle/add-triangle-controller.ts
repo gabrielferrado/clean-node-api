@@ -1,5 +1,5 @@
 import { AddTriangle, Controller, HttpRequest, HttpResponse, Validator } from './add-triangle-controller-protocols'
-import { badRequest } from '../../../helpers/http/http-helpers'
+import { badRequest, ok, serverError } from '../../../helpers/http/http-helpers'
 
 export class AddTriangleController implements Controller {
   constructor (
@@ -8,13 +8,16 @@ export class AddTriangleController implements Controller {
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    const error = this.validator.validate(httpRequest.body)
-    if (error) return badRequest(error)
+    try {
+      const error = this.validator.validate(httpRequest.body)
+      if (error) return badRequest(error)
 
-    const { side1, side2, side3 } = httpRequest.body
+      const { side1, side2, side3 } = httpRequest.body
+      const triangle = await this.addTriangle.add({ side1, side2, side3 })
 
-    await this.addTriangle.add({ side1, side2, side3 })
-
-    return null
+      return ok(triangle)
+    } catch (e) {
+      return serverError(e)
+    }
   }
 }
