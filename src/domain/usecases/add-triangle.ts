@@ -1,9 +1,14 @@
 import { TriangleModel } from '../models/triangle'
 
+export enum TriangleTypes {
+  EQUILATERAL = 'equilateral',
+  ISOSCELES = 'isosceles',
+  SCALENE = 'scalene'
+}
+
 export interface AddTriangleModel {
-  side1: number
-  side2: number
-  side3: number
+  type: TriangleTypes
+  sides: number[]
 }
 
 export interface AddTriangle {

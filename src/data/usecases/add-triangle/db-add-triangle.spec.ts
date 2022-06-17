@@ -1,14 +1,15 @@
 import { DbAddTriangle } from './db-add-triangle'
-import { AddTriangle, AddTriangleModel, AddTriangleRepository, TriangleModel } from './db-add-triangle-protocols'
+import {
+  AddTriangle,
+  AddTriangleModel,
+  AddTriangleRepository,
+  TriangleModel,
+  TriangleTypes
+} from './db-add-triangle-protocols'
 
-const VALID_SIDES = {
-  side1: 1,
-  side2: 1,
-  side3: 1
-}
 const VALID_TRIANGLE = {
   id: 'any_id',
-  type: 'any_type',
+  type: TriangleTypes.SCALENE,
   sides: [3,4,5]
 }
 
@@ -39,8 +40,8 @@ describe('DbAddTriangle UseCase', function () {
   test('Should call AddTriangleRepository with correct values', async () => {
     const { sut, addTriangleRepositoryStub } = makeSut()
     const addSpy = jest.spyOn(addTriangleRepositoryStub, 'add')
-    await sut.add(VALID_SIDES)
-    expect(addSpy).toHaveBeenCalledWith(VALID_SIDES)
+    await sut.add(VALID_TRIANGLE)
+    expect(addSpy).toHaveBeenCalledWith(VALID_TRIANGLE)
   })
 
   test('Should throw if AddTriangleRepository throws', async () => {
@@ -48,13 +49,13 @@ describe('DbAddTriangle UseCase', function () {
     jest.spyOn(addTriangleRepositoryStub, 'add').mockReturnValueOnce(
       Promise.reject(new Error())
     )
-    const promise = sut.add(VALID_SIDES)
+    const promise = sut.add(VALID_TRIANGLE)
     await expect(promise).rejects.toThrow()
   })
 
   test('Should return a triangle on success', async () => {
     const { sut } = makeSut()
-    const account = await sut.add(VALID_SIDES)
+    const account = await sut.add(VALID_TRIANGLE)
     expect(account).toEqual(VALID_TRIANGLE)
   })
 })

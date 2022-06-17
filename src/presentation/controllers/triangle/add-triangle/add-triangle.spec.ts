@@ -1,20 +1,27 @@
 import { AddTriangleController } from './add-triangle-controller'
-import { AddTriangle, AddTriangleModel, TriangleModel, Validator } from './add-triangle-controller-protocols'
+import {
+  AddTriangle,
+  AddTriangleModel,
+  TriangleModel,
+  TriangleTypes,
+  Validator
+} from './add-triangle-controller-protocols'
 import { badRequest, ok, serverError } from '../../../helpers/http/http-helpers'
-import { ServerError } from '../../../errors'
+import { InvalidParamError, ServerError } from '../../../errors'
+import { Sides, TriangleValidator } from '../../../../validation/protocols/triangle-validator'
 
 const VALID_BODY = {
-  side1: 2,
-  side2: 2,
-  side3: 3
+  side1: 1,
+  side2: 1,
+  side3: 1
 }
 const VALID_HTTP_REQUEST = {
   body: VALID_BODY
 }
 const VALID_TRIANGLE = {
   id: 'any_id',
-  type: 'any_type',
-  sides: [3,4,5]
+  type: TriangleTypes.EQUILATERAL,
+  sides: [1,1,1]
 }
 
 const makeValidator = (): Validator => {
@@ -25,7 +32,6 @@ const makeValidator = (): Validator => {
   }
   return new ValidatorStub()
 }
-
 const makeAddTriangle = (): AddTriangle => {
   class AddTriangleStub implements AddTriangle {
     async add (data: AddTriangleModel): Promise<TriangleModel> {
@@ -34,21 +40,35 @@ const makeAddTriangle = (): AddTriangle => {
   }
   return new AddTriangleStub()
 }
+const makeTriangleValidator = (): TriangleValidator => {
+  class TriangleValidatorStub implements TriangleValidator {
+    classify (sides: Sides): AddTriangleModel {
+      return {
+        type: TriangleTypes.EQUILATERAL,
+        sides: VALID_TRIANGLE.sides
+      }
+    }
+  }
+  return new TriangleValidatorStub()
+}
 
 interface SutTypes {
   sut: AddTriangleController
   validatorStub: Validator
   addTriangleStub: AddTriangle
+  triangleValidatorStub: TriangleValidator
 }
 
 const makeSut = (): SutTypes => {
   const validatorStub = makeValidator()
   const addTriangleStub = makeAddTriangle()
-  const sut = new AddTriangleController(validatorStub, addTriangleStub)
+  const triangleValidatorStub = makeTriangleValidator()
+  const sut = new AddTriangleController(validatorStub, addTriangleStub, triangleValidatorStub)
   return {
     sut,
     validatorStub,
-    addTriangleStub
+    addTriangleStub,
+    triangleValidatorStub
   }
 }
 
@@ -71,7 +91,21 @@ describe('AddTriangle Controller', function () {
     const { sut, addTriangleStub } = makeSut()
     const addTriangleSpy = jest.spyOn(addTriangleStub, 'add')
     await sut.handle(VALID_HTTP_REQUEST)
-    expect(addTriangleSpy).toHaveBeenCalledWith(VALID_BODY)
+    expect(addTriangleSpy).toHaveBeenCalledWith({ type: VALID_TRIANGLE.type, sides: VALID_TRIANGLE.sides })
+  })
+
+  test('Should call TriangleValidator with correct values', async () => {
+    const { sut, triangleValidatorStub } = makeSut()
+    const classifySpy = jest.spyOn(triangleValidatorStub, 'classify')
+    await sut.handle(VALID_HTTP_REQUEST)
+    expect(classifySpy).toHaveBeenCalledWith(VALID_BODY)
+  })
+
+  test('Should return 400 if TriangleValidator fails', async () => {
+    const { sut, triangleValidatorStub } = makeSut()
+    jest.spyOn(triangleValidatorStub, 'classify').mockReturnValueOnce(null)
+    const httpResponse = await sut.handle(VALID_HTTP_REQUEST)
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('sides')))
   })
 
   test('Should return 200 if valid data is provided', async () => {

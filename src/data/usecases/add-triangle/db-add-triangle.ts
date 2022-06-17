@@ -1,4 +1,9 @@
-import { AddTriangle, AddTriangleModel, AddTriangleRepository, TriangleModel } from './db-add-triangle-protocols'
+import {
+  AddTriangle,
+  AddTriangleModel,
+  AddTriangleRepository,
+  TriangleModel
+} from './db-add-triangle-protocols'
 
 export class DbAddTriangle implements AddTriangle {
   constructor (
