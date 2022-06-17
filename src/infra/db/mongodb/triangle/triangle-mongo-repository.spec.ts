@@ -56,5 +56,11 @@ describe('Triangle Mongo Repository', function () {
       expect(triangles[0].type).toBe(TriangleTypes.SCALENE)
       expect(triangles[1].type).toBe(TriangleTypes.EQUILATERAL)
     })
+
+    test('Should return an empty list if no registries', async () => {
+      const sut = makeSut()
+      const triangles = await sut.loadAll()
+      expect(triangles.length).toBe(0)
+    })
   })
 })
