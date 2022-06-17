@@ -26,7 +26,7 @@ export class AddTriangleController implements Controller {
       const classifiedTriangle = this.triangleValidator.classify({ side1, side2, side3 })
       if (!classifiedTriangle) return badRequest(new InvalidParamError('sides'))
 
-      const triangle = await this.addTriangle.add(classifiedTriangle)
+      const triangle = await this.addTriangle.add({ ...classifiedTriangle, date: new Date() })
 
       return ok(triangle)
     } catch (e) {

@@ -4,12 +4,14 @@ import { Validator } from '../../../../../presentation/protocols'
 import { Sides, TriangleValidator } from '../../../../../validation/protocols/triangle-validator'
 import { AddTriangleModel, TriangleTypes } from '../../../../../domain/usecases/add-triangle'
 import { TriangleSidesValidator } from '../../../../../validation/validators/triangle-sides-validator'
+import * as mockdate from 'mockdate'
 
 jest.mock('../../../../../validation/validators/validator-composite')
 
 const VALID_TRIANGLE = {
   type: TriangleTypes.SCALENE,
-  sides: [3,4,5]
+  sides: [3,4,5],
+  date: new Date()
 }
 
 const makeTriangleValidator = (): TriangleValidator => {
@@ -22,6 +24,10 @@ const makeTriangleValidator = (): TriangleValidator => {
 }
 
 describe('AddTriangleValidator Factory', function () {
+  beforeAll(() => {
+    mockdate.set(new Date())
+  })
+
   test('Should call ValidationComposite with all validations', () => {
     const validations: Validator[] = []
     makeAddTriangleValidator()

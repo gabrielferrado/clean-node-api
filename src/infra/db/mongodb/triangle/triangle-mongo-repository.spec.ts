@@ -2,16 +2,19 @@ import { MongoHelper } from '../helpers/mongo-helper'
 import { TriangleMongoRepository } from './triangle-mongo-repository'
 import { Collection } from 'mongodb'
 import { TriangleTypes } from '../../../../domain/usecases/add-triangle'
+import * as mockdate from 'mockdate'
 
 const VALID_TRIANGLE = {
   type: TriangleTypes.SCALENE,
-  sides: [3,4,5]
+  sides: [3,4,5],
+  date: new Date()
 }
 
 let triangleCollection: Collection
 
 describe('Triangle Mongo Repository', function () {
   beforeAll(async () => {
+    mockdate.set(new Date())
     await MongoHelper.connect(process.env.MONGO_URL)
   })
 

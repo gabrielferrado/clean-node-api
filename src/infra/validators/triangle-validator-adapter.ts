@@ -14,10 +14,15 @@ export class TriangleValidatorAdapter implements TriangleValidator {
       .reduce((previousValue, currentValue) =>
         toInteger(previousValue) + toInteger(currentValue), 0)
 
+    const payload = {
+      sides: sidesArray,
+      date: new Date()
+    }
+
     if (sidesSum === 0) {
       return {
         type: TriangleTypes.EQUILATERAL,
-        sides: sidesArray
+        ...payload
       }
     }
 
@@ -25,12 +30,12 @@ export class TriangleValidatorAdapter implements TriangleValidator {
       if ([...new Set(sidesArray)].length === 2) {
         return {
           type: TriangleTypes.ISOSCELES,
-          sides: sidesArray
+          ...payload
         }
       }
       return {
         type: TriangleTypes.SCALENE,
-        sides: sidesArray
+        ...payload
       }
     }
     return null

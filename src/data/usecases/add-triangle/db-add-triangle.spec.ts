@@ -6,11 +6,13 @@ import {
   TriangleModel,
   TriangleTypes
 } from './db-add-triangle-protocols'
+import * as mockdate from 'mockdate'
 
 const VALID_TRIANGLE = {
   id: 'any_id',
   type: TriangleTypes.SCALENE,
-  sides: [3,4,5]
+  sides: [3,4,5],
+  date: new Date()
 }
 
 const makeAddTriangleRepository = (): AddTriangleRepository => {
@@ -37,6 +39,10 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbAddTriangle UseCase', function () {
+  beforeAll(() => {
+    mockdate.set(new Date())
+  })
+
   test('Should call AddTriangleRepository with correct values', async () => {
     const { sut, addTriangleRepositoryStub } = makeSut()
     const addSpy = jest.spyOn(addTriangleRepositoryStub, 'add')

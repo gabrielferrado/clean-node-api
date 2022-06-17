@@ -9,6 +9,7 @@ export enum TriangleTypes {
 export interface AddTriangleModel {
   type: TriangleTypes
   sides: number[]
+  date: Date
 }
 
 export interface AddTriangle {

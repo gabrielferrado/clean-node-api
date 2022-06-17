@@ -2,10 +2,12 @@ import { TriangleSidesValidator } from './triangle-sides-validator'
 import { Sides, TriangleValidator } from '../protocols/triangle-validator'
 import { InvalidParamError } from '../../presentation/errors'
 import { AddTriangleModel, TriangleTypes } from '../../domain/usecases/add-triangle'
+import * as mockdate from 'mockdate'
 
 const VALID_TRIANGLE = {
   type: TriangleTypes.EQUILATERAL,
-  sides: [1,1,1]
+  sides: [1,1,1],
+  date: new Date()
 }
 const VALID_SIDES = {
   side1: 1,
@@ -37,6 +39,10 @@ const makeSut = (): SutTypes => {
 }
 
 describe('TriangleFieldValidator Factory', function () {
+  beforeAll(() => {
+    mockdate.set(new Date())
+  })
+
   test('Should return an error if TriangleValidator returns null', () => {
     const { sut, triangleValidatorStub } = makeSut()
     jest.spyOn(triangleValidatorStub, 'classify').mockReturnValueOnce(null)

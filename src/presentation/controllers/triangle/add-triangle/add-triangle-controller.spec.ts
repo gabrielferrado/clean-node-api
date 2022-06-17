@@ -9,6 +9,7 @@ import {
 import { badRequest, ok, serverError } from '../../../helpers/http/http-helpers'
 import { InvalidParamError, ServerError } from '../../../errors'
 import { Sides, TriangleValidator } from '../../../../validation/protocols/triangle-validator'
+import mockdate from 'mockdate'
 
 const VALID_BODY = {
   side1: 1,
@@ -21,7 +22,8 @@ const VALID_HTTP_REQUEST = {
 const VALID_TRIANGLE = {
   id: 'any_id',
   type: TriangleTypes.EQUILATERAL,
-  sides: [1,1,1]
+  sides: [1,1,1],
+  date: new Date()
 }
 
 const makeValidator = (): Validator => {
@@ -45,7 +47,8 @@ const makeTriangleValidator = (): TriangleValidator => {
     classify (sides: Sides): AddTriangleModel {
       return {
         type: TriangleTypes.EQUILATERAL,
-        sides: VALID_TRIANGLE.sides
+        sides: VALID_TRIANGLE.sides,
+        date: new Date()
       }
     }
   }
@@ -73,6 +76,10 @@ const makeSut = (): SutTypes => {
 }
 
 describe('AddTriangle Controller', function () {
+  beforeAll(() => {
+    mockdate.set(new Date())
+  })
+
   test('Should call Validator with correct values', async () => {
     const { sut, validatorStub } = makeSut()
     const validateSpy = jest.spyOn(validatorStub, 'validate')
@@ -91,7 +98,7 @@ describe('AddTriangle Controller', function () {
     const { sut, addTriangleStub } = makeSut()
     const addTriangleSpy = jest.spyOn(addTriangleStub, 'add')
     await sut.handle(VALID_HTTP_REQUEST)
-    expect(addTriangleSpy).toHaveBeenCalledWith({ type: VALID_TRIANGLE.type, sides: VALID_TRIANGLE.sides })
+    expect(addTriangleSpy).toHaveBeenCalledWith({ type: VALID_TRIANGLE.type, sides: VALID_TRIANGLE.sides, date: new Date() })
   })
 
   test('Should call TriangleValidator with correct values', async () => {
