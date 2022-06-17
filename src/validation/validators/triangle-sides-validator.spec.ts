@@ -1,8 +1,9 @@
 import { TriangleSidesValidator } from './triangle-sides-validator'
 import { Sides, TriangleValidator } from '../protocols/triangle-validator'
 import { InvalidParamError } from '../../presentation/errors'
-import { AddTriangleModel, TriangleTypes } from '../../domain/usecases/add-triangle'
+import { AddTriangleModel } from '../../domain/usecases/add-triangle'
 import * as mockdate from 'mockdate'
+import { TriangleTypes } from '../../domain/models/triangle'
 
 const VALID_TRIANGLE = {
   type: TriangleTypes.EQUILATERAL,

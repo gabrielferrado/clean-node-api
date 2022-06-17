@@ -1,10 +1,4 @@
-import { TriangleModel } from '../models/triangle'
-
-export enum TriangleTypes {
-  EQUILATERAL = 'equilateral',
-  ISOSCELES = 'isosceles',
-  SCALENE = 'scalene'
-}
+import { TriangleModel, TriangleTypes } from '../models/triangle'
 
 export interface AddTriangleModel {
   type: TriangleTypes

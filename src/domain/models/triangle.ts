@@ -1,4 +1,8 @@
-import { TriangleTypes } from '../usecases/add-triangle'
+export enum TriangleTypes {
+  EQUILATERAL = 'equilateral',
+  ISOSCELES = 'isosceles',
+  SCALENE = 'scalene'
+}
 
 export interface TriangleModel {
   id: string

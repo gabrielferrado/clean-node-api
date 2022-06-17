@@ -2,9 +2,10 @@ import { makeAddTriangleValidator } from './add-triangle-validator-factory'
 import { ValidatorComposite , RequiredFieldValidator } from '../../../../../validation/validators'
 import { Validator } from '../../../../../presentation/protocols'
 import { Sides, TriangleValidator } from '../../../../../validation/protocols/triangle-validator'
-import { AddTriangleModel, TriangleTypes } from '../../../../../domain/usecases/add-triangle'
+import { AddTriangleModel } from '../../../../../domain/usecases/add-triangle'
 import { TriangleSidesValidator } from '../../../../../validation/validators/triangle-sides-validator'
 import * as mockdate from 'mockdate'
+import { TriangleTypes } from '../../../../../domain/models/triangle'
 
 jest.mock('../../../../../validation/validators/validator-composite')
 
