@@ -26,11 +26,11 @@ describe('Triangle Routes', function () {
   })
 
   describe('POST /triangles', () => {
-    test('Should return 200 on add triangle success', async () => {
+    test('Should return 403 if not authorized', async () => {
       await request(app)
         .post('/api/triangles')
         .send(VALID_TRIANGLE)
-        .expect(200)
+        .expect(403)
     })
   })
 })
