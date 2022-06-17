@@ -4,7 +4,7 @@ import {
   AddTriangleController
 } from '../../../../../presentation/controllers/triangle/add-triangle/add-triangle-controller'
 import { makeAddTriangleValidator } from './add-triangle-validator-factory'
-import { makeDbAddTriangle } from '../../../usecases/add-triangle/db-add-triangle-factory'
+import { makeDbAddTriangle } from '../../../usecases/triangle/add-triangle/db-add-triangle-factory'
 import { TriangleValidatorAdapter } from '../../../../../infra/validators/triangle-validator-adapter'
 
 export const makeAddTriangleController = (): Controller => {
