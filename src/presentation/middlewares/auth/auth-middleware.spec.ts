@@ -1,9 +1,11 @@
 import { AuthMiddleware } from './auth-middleware'
-import { Middleware } from '../../protocols'
-import { forbidden, ok, serverError } from '../../helpers/http/http-helpers'
-import { AccessDeniedError } from '../../errors'
-import { AccountModel } from '../../../domain/models/account'
-import { LoadAccountByToken } from '../../../domain/usecases/load-account-by-token'
+import {
+  AccessDeniedError, AccountModel,
+  forbidden,
+  LoadAccountByToken,
+  Middleware,
+  ok, serverError
+} from './auth-middleware-protocols'
 
 const VALID_ACCOUNT = {
   email: 'any_email',
