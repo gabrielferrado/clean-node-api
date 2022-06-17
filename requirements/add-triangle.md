@@ -2,7 +2,7 @@
 
 > ## Success case:
 1. ✅️ Receives a request of type **POST** in route **/api/triangles**
-2. ⛔️ Validates if the request was made by a user
+2. ✅️ Validates if the request was made by a user
 3. ✅️ Validates mandatory **length** and **sides** data
 4. ✅️️ Validates if **length** is greater than zero
 5. ✅️ Validates if **sides** are not equals to three
@@ -13,6 +13,6 @@
 
 > ## Exceptions:
 1. ⛔️ Returns 404 error if API does not exist
-1. ⛔️ Returns 403 error if user is not authenticated
+1. ✅️ Returns 403 error if user is not authenticated
 1. ✅️ Returns error 400 if **length** or **sides** are not provided by the client
 1. ✅️️ Returns error 500 if there is an error when trying to create the triangle
