@@ -27,12 +27,14 @@ describe('Triangle Mongo Repository', function () {
     await triangleCollection.deleteMany({})
   })
 
-  test('Should return an triangle on add success', async () => {
-    const sut = new TriangleMongoRepository()
-    const triangle = await sut.add(VALID_TRIANGLE)
-    expect(triangle).toBeTruthy()
-    expect(triangle.id).toBeTruthy()
-    expect(triangle.type).toBe(VALID_TRIANGLE.type)
-    expect(triangle.sides).toEqual(VALID_TRIANGLE.sides)
+  describe('add()' , function () {
+    test('Should return an triangle on add success', async () => {
+      const sut = new TriangleMongoRepository()
+      const triangle = await sut.add(VALID_TRIANGLE)
+      expect(triangle).toBeTruthy()
+      expect(triangle.id).toBeTruthy()
+      expect(triangle.type).toBe(VALID_TRIANGLE.type)
+      expect(triangle.sides).toEqual(VALID_TRIANGLE.sides)
+    })
   })
 })
