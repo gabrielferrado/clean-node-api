@@ -8,4 +8,5 @@ export interface TriangleModel {
   id: string
   type: TriangleTypes
   sides: number[]
+  date: Date
 }
