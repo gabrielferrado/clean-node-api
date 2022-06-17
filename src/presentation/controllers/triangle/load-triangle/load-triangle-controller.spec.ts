@@ -4,7 +4,8 @@ import {
   TriangleModel,
   TriangleTypes
 } from './load-triangle-controller-protocols'
-import { ok } from '../../../helpers/http/http-helpers'
+import { ok, serverError } from '../../../helpers/http/http-helpers'
+import { ServerError } from '../../../errors'
 
 const makeFakeTriangles = (): TriangleModel[] => {
   return [
@@ -58,5 +59,15 @@ describe('LoadTriangle Controller', function () {
     const { sut } = makeSut()
     const httpResponse = await sut.handle({})
     expect(httpResponse).toEqual(ok(makeFakeTriangles()))
+  })
+
+  test('Should return 500 if load fails', async () => {
+    const { sut, loadTriangleStub } = makeSut()
+    jest.spyOn(loadTriangleStub, 'load')
+      .mockImplementationOnce(async () => {
+        return Promise.reject(new Error())
+      })
+    const httpResponse = await sut.handle({})
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 })
