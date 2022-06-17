@@ -72,5 +72,11 @@ describe('Account Mongo Repository', function () {
       const account = await sut.loadByToken('any_token')
       validateAccount(account)
     })
+
+    test('Should return null when loadByToken fails', async () => {
+      const sut = new AccountMongoRepository()
+      const account = await sut.loadByEmail(ACCOUNT_DATA.email)
+      expect(account).toBeNull()
+    })
   })
 })
