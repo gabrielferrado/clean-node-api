@@ -4,7 +4,7 @@ import {
   HttpResponse,
   LoadTriangle
 } from './load-triangle-controller-protocols'
-import { ok, serverError } from '../../../helpers/http/http-helpers'
+import { noContent, ok, serverError } from '../../../helpers/http/http-helpers'
 
 export class LoadTriangleController implements Controller {
   constructor (
@@ -14,8 +14,7 @@ export class LoadTriangleController implements Controller {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const triangles = await this.loadTriangle.load()
-
-      return ok(triangles)
+      return triangles.length ? ok(triangles) : noContent()
     } catch (e) {
       return serverError(e)
     }
