@@ -2,6 +2,7 @@ import { AccountModel } from '../../../domain/models/account'
 import { DbLoadAccountByToken } from './db-load-account-by-token'
 import { Decryptor } from '../../protocols/criptography/decryptor'
 import { LoadAccountByTokenRepository } from '../../protocols/db/account/load-account-by-token-repository'
+import { DecryptorPayload } from '../../protocols/criptography/decryptor-payload'
 
 const VALID_ACCOUNT = {
   email: 'any_email',
@@ -21,8 +22,8 @@ const makeLoadAccountByTokenRepository = (): LoadAccountByTokenRepository => {
 
 const makeDecryptor = (): Decryptor => {
   class DecryptorStub implements Decryptor {
-    async decrypt (value: string): Promise<string> {
-      return Promise.resolve('any_value')
+    async decrypt (value: string): Promise<DecryptorPayload> {
+      return Promise.resolve({ id: 'any_value', iat: 9999999 })
     }
   }
   return new DecryptorStub()
@@ -56,7 +57,7 @@ describe('DbLoadAccountByToken UseCase', function () {
     const { sut, loadAccountByTokenRepositoryStub } = makeSut()
     const loadByTokenSpy = jest.spyOn(loadAccountByTokenRepositoryStub, 'loadByToken')
     await sut.load('any_token')
-    expect(loadByTokenSpy).toHaveBeenCalledWith('any_value')
+    expect(loadByTokenSpy).toHaveBeenCalledWith('any_token')
   })
 
   test('Should return null if Decryptor returns null', async () => {

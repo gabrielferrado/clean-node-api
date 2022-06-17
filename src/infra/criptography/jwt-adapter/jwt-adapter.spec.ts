@@ -1,12 +1,13 @@
 import jwt from 'jsonwebtoken'
 import { JwtAdapter } from './jwt-adapter'
+import { DecryptorPayload } from '../../../data/protocols/criptography/decryptor-payload'
 
 jest.mock('jsonwebtoken', () => ({
   async sign (): Promise<string> {
     return Promise.resolve('any_token')
   },
-  async verify (token: string): Promise<string> {
-    return Promise.resolve('any_value')
+  async verify (token: string): Promise<DecryptorPayload> {
+    return Promise.resolve({ id: 'any_value', iat: 9999999 })
   }
 }))
 
@@ -50,7 +51,7 @@ describe('JWT Adapter', function () {
     test('Should return a value on verify success', async () => {
       const sut = makeSut()
       const value = await sut.decrypt('any_token')
-      expect(value).toBe('any_value')
+      expect(value.id).toBe('any_value')
     })
 
     test('Should throw if verify throws', async () => {
