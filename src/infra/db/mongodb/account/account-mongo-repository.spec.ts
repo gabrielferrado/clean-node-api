@@ -64,4 +64,13 @@ describe('Account Mongo Repository', function () {
       expect(account.accessToken).toBe('any_token')
     })
   })
+
+  describe('loadByToken()', function () {
+    test('Should return an account when loadByToken succeeds', async () => {
+      const sut = new AccountMongoRepository()
+      await accountCollection.insertOne({ accessToken: 'any_token', ...ACCOUNT_DATA })
+      const account = await sut.loadByToken('any_token')
+      validateAccount(account)
+    })
+  })
 })
