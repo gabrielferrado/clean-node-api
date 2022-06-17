@@ -1,6 +1,7 @@
 import { DbLoadTriangle } from './db-load-triangle'
 import { TriangleModel, TriangleTypes } from '../../../domain/models/triangle'
 import { LoadTriangleRepository } from '../../protocols/db/triangle/load-triangle-repository'
+import { LoadTriangle } from '../../../domain/usecases/load-triangle'
 
 const makeFakeTriangles = (): TriangleModel[] => {
   return [
@@ -19,17 +20,32 @@ const makeFakeTriangles = (): TriangleModel[] => {
   ]
 }
 
+const makeLoadTriangleRepository = (): LoadTriangleRepository => {
+  class LoadTriangleRepositoryStub implements LoadTriangleRepository {
+    async loadAll (): Promise<TriangleModel[]> {
+      return Promise.resolve(makeFakeTriangles())
+    }
+  }
+  return new LoadTriangleRepositoryStub()
+}
+
+interface SutTypes {
+  sut: LoadTriangle
+  loadTriangleRepositoryStub: LoadTriangleRepository
+}
+const makeSut = (): SutTypes => {
+  const loadTriangleRepositoryStub = makeLoadTriangleRepository()
+  const sut = new DbLoadTriangle(loadTriangleRepositoryStub)
+  return {
+    sut,
+    loadTriangleRepositoryStub
+  }
+}
+
 describe('DBLoadTriangles UseCase', function () {
   test('Should call LoadTriangleRepository', async () => {
-    class LoadTriangleRepositoryStub implements LoadTriangleRepository {
-      async loadAll (): Promise<TriangleModel[]> {
-        return Promise.resolve(makeFakeTriangles())
-      }
-    }
-
-    const loadTriangleRepositoryStub = new LoadTriangleRepositoryStub()
+    const { sut, loadTriangleRepositoryStub } = makeSut()
     const loadAllSpy = jest.spyOn(loadTriangleRepositoryStub, 'loadAll')
-    const sut = new DbLoadTriangle(loadTriangleRepositoryStub)
     await sut.load()
     expect(loadAllSpy).toHaveBeenCalled()
   })
