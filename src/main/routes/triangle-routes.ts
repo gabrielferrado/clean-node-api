@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { adaptRoute } from '../adapters/express/express-route-adapter'
+import { adaptRoute } from '../adapters/express-route-adapter'
 import {
   makeAddTriangleController
 } from '../factories/controllers/triangle/add-triangle/add-triangle-controller-factory'
