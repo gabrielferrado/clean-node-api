@@ -19,7 +19,7 @@ export class DbAuthentication implements Authenticator {
     if (account) {
       const isValid = await this.hashComparer.compare(authentication.password, account.password)
       if (isValid) {
-        const accessToken = await this.encryptor.encrypt(account)
+        const accessToken = await this.encryptor.encrypt(account.id)
         await this.updateAccessTokenRepository.updateAccessToken(account.id, accessToken)
         return accessToken
       }
