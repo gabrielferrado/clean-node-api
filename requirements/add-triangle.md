@@ -1,14 +1,14 @@
 # Create triangle
 
 > ## Success case:
-1. ⛔️ Receives a request of type **POST** in route **/api/triangles**
+1. ✅️ Receives a request of type **POST** in route **/api/triangles**
 2. ⛔️ Validates if the request was made by a user
-3. ⛔️ Validates mandatory **length** and **sides** data
-4. ⛔️ Validates if **length** is greater than zero
-5. ⛔️ Validates if **sides** are not equals to three
-6. ⛔️ Validates if the **sum of the lengths** of any **two sides** are not **greater than or equal** to the length of the **third side**.
-7. ⛔️ Determine a **type** for the triangle
-8. ⛔️ Create a triangle with the data provided
+3. ✅️ Validates mandatory **length** and **sides** data
+4. ✅️️ Validates if **length** is greater than zero
+5. ✅️ Validates if **sides** are not equals to three
+6. ✅️ Validates if the **sum of the lengths** of any **two sides** are not **greater than or equal** to the length of the **third side**.
+7. ✅ Determine a **type** for the triangle
+8. ✅️ Create a triangle with the data provided
 9. ✅ Returns 200 with triangle data
 
 > ## Exceptions:
