@@ -14,6 +14,7 @@ export class TriangleMongoRepository implements AddTriangleRepository, LoadTrian
 
   async loadAll (): Promise<TriangleModel[]> {
     const triangleCollection = await MongoHelper.getCollection('triangles')
-    return (await triangleCollection.find().toArray() as unknown) as TriangleModel[]
+    const triangles = await triangleCollection.find().toArray()
+    return MongoHelper.mapCollection(triangles)
   }
 }

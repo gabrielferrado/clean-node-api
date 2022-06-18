@@ -8,7 +8,6 @@ export class DbLoadTriangle implements LoadTriangle {
   ) {}
 
   async load (): Promise<TriangleModel[]> {
-    await this.loadTriangleRepository.loadAll()
-    return Promise.resolve([])
+    return this.loadTriangleRepository.loadAll()
   }
 }
