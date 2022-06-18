@@ -6,6 +6,7 @@ import {
 } from './load-triangle-controller-protocols'
 import { noContent, ok, serverError } from '../../../helpers/http/http-helpers'
 import { ServerError } from '../../../errors'
+import * as mockdate from 'mockdate'
 
 const makeFakeTriangles = (): TriangleModel[] => {
   return [
@@ -48,6 +49,10 @@ const makeSut = (): SutTypes => {
 }
 
 describe('LoadTriangle Controller', function () {
+  beforeAll(() => {
+    mockdate.set(new Date())
+  })
+
   test('Should call LoadTriangles', async () => {
     const { sut, loadTriangleStub } = makeSut()
     const loadSpy = jest.spyOn(loadTriangleStub, 'load')

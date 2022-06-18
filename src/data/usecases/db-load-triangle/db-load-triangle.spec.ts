@@ -50,6 +50,12 @@ describe('DBLoadTriangles UseCase', function () {
     expect(loadAllSpy).toHaveBeenCalled()
   })
 
+  test('Should return triangles on loadAll', async () => {
+    const { sut } = makeSut()
+    const triangles = await sut.load()
+    expect(triangles).toEqual(makeFakeTriangles())
+  })
+
   test('Should throw if LoadTriangleRepository throws', async () => {
     const { sut, loadTriangleRepositoryStub } = makeSut()
     jest.spyOn(loadTriangleRepositoryStub, 'loadAll').mockReturnValueOnce(
