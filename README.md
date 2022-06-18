@@ -1,4 +1,6 @@
 # clean-node-api
+[![Build Status](https://app.travis-ci.com/gabrielferrado/clean-node-api.svg?branch=master)](https://app.travis-ci.com/gabrielferrado/clean-node-api)
+[![Coverage Status](https://coveralls.io/repos/github/gabrielferrado/clean-node-api/badge.svg?branch=master)](https://coveralls.io/github/gabrielferrado/clean-node-api?branch=master)
 
 This is an API with a well-defined and decoupled architecture, 
 using TDD (test-oriented programming) as a working methodology, 
