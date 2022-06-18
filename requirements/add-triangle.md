@@ -12,7 +12,7 @@
 9. ✅ Returns 200 with triangle data
 
 > ## Exceptions:
-1. ⛔️ Returns 404 error if API does not exist
+1. ✅ Returns 404 error if API does not exist
 1. ✅️ Returns 403 error if user is not authenticated
 1. ✅️ Returns error 400 if **length** or **sides** are not provided by the client
 1. ✅️️ Returns error 500 if there is an error when trying to create the triangle
