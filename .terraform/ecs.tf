@@ -48,7 +48,7 @@ resource "aws_ecs_service" "service" {
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.lb_target_group.arn
-    container_name   = "clean-triangles-api"
+    container_name   = "clean-triangle-api"
     container_port   = 3000
   }
   # Optional: Allow external changes without Terraform plan difference(for example ASG)
