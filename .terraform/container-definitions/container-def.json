@@ -13,7 +13,7 @@
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group" : "/ecs/clean-triangles-api-container",
+        "awslogs-group" : "/ecs/ecs_triangle_cluster",
         "awslogs-region": "us-east-1"
       }
     }
