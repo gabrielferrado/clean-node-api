@@ -2,6 +2,8 @@ FROM node:14
 WORKDIR /usr/src/clean-node-api
 COPY ./package.json .
 RUN npm install --only=prod
+RUN npm i pm2 -g
 COPY ./dist ./dist
 EXPOSE 3000
-CMD ["node", "dist/main/server.js"]
+
+CMD ["pm2-runtime", "./dist/main/server.js"]
