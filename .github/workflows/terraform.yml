@@ -11,13 +11,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Create env file
-        run: |
-          touch env
-          echo MONGO_URL=${{ secrets.MONGO_URL }} >> env
-          echo PORT=${{ secrets.PORT }} >> env
-          exit 0
-
       - name: Build project
         uses: actions/setup-node@v3
         with:
@@ -34,6 +27,9 @@ jobs:
           account_id: ${{ secrets.AWS_ACCOUNT_ID }}
           repo: ${{ secrets.AWS_ECR_REPO_NAME }}
           region: ${{ secrets.AWS_ECR_REPO_REGION }}
+          extra_build_args: |
+            --build-arg ARG_ENV_SECRET=${{ secrets.MONGO_URL }}
+            --build-arg ARG_ENV_SECRET_1=${{ secrets.PORT }}
           create_repo: true
 
       - name: Setup Terraform

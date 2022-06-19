@@ -1,7 +1,12 @@
 FROM node:14
 WORKDIR /app
 COPY ./package.json .
-RUN mv ./env ./.env
+
+ARG ARG_ENV_SECRET
+ARG ARG_ENV_SECRET_1
+COPY ./env-script.sh ./
+RUN ./env-script.sh
+
 RUN npm install --only=prod
 RUN npm i pm2 -g
 COPY ./dist ./dist
