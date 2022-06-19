@@ -1,7 +1,7 @@
 FROM node:14
 WORKDIR /app
 COPY ./package.json .
-RUN mv ./env ./.env
+COPY .env .
 RUN npm install --only=prod
 RUN npm i pm2 -g
 COPY ./dist ./dist
