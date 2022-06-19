@@ -17,14 +17,11 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 0.12.7
+          terraform_version: 1.2.3
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
       - name: Terraform init
         id: init
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: terraform init -input=false
 
       - name: Terraform fmt
@@ -38,39 +35,42 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: terraform plan -no-color -var="key_name=ecs_triangles" -var="cluster_name=ecs_triangle_cluster"
-        continue-on-error: false
+        continue-on-error: true
 
-      - uses: actions/github-script@v2
-        name: Runs only on pull request
+      - name: Update Pull Request
+        uses: actions/github-script@6
         if: github.event_name == 'pull_request'
         env:
           PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
         with:
-          github-token: ${{ secrets.MY_GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
             #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-            #### Terraform Validation 🤖${{ steps.validate.outputs.stdout }}
             #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-            
+            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+
             <details><summary>Show Plan</summary>
-            
-            \`\`\`${process.env.PLAN}\`\`\`
-            
+
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
+
             </details>
-            
-            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`,  Workflow: \`${{ github.workflow }}\`*`;
-            
-            github.issues.createComment({
+
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: output
             })
+            
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
