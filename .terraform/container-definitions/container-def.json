@@ -1,0 +1,21 @@
+[
+  {
+    "name": "clean-triangles-api",
+    "image": "450097264690.dkr.ecr.sa-east-1.amazonaws.com/clean-triangles-api:latest",
+    "cpu": 2,
+    "memory": 256,
+    "essential": true,
+    "portMappings": [
+      {
+        "containerPort": 80
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group" : "/ecs/clean-triangles-api-container",
+        "awslogs-region": "us-east-1"
+      }
+    }
+  }
+]
