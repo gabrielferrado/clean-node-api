@@ -1,9 +1,9 @@
 FROM node:14
 WORKDIR /app
 COPY ./package.json .
+RUN mv ./env ./.env
 RUN npm install --only=prod
 RUN npm i pm2 -g
-COPY ./.env ./.env
 COPY ./dist ./dist
 EXPOSE 80
 
