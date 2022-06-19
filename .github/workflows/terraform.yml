@@ -1,28 +1,27 @@
-name: 'Terraform'
+name: Terraform
 
 on:
   push:
-    branches:
-      - master
-  pull_request:
+    branches: [ "master" ]
 
 jobs:
   build:
-    name: 'Terraform'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.12.7
 
-      - name: Terraform Init
+      - name: Terraform init
         id: init
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: cd ./terraform && terraform init -input=false
+        run: terraform init -input=false
 
       - name: Terraform fmt
         id: fmt
@@ -39,7 +38,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: terraform plan -no-color -var="key_name=ecs_triangles" -var="cluster_name=ecs_triangle_cluster"
-        continue-on-error: true
+        continue-on-error: false
 
       - uses: actions/github-script@v2
         name: Runs only on pull request
@@ -68,6 +67,7 @@ jobs:
               repo: context.repo.repo,
               body: output
             })
-     - name: Terraform Apply
-       if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-       run: terraform apply -auto-approve -var="key_name=ecs_triangles" -var="cluster_name=ecs_triangle_cluster"
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        run: terraform apply -auto-approve -var="key_name=ecs_triangles" -var="cluster_name=ecs_triangle_cluster"
