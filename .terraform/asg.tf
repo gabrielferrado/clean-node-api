@@ -43,7 +43,7 @@ resource "aws_security_group" "ec2-sg" {
 resource "aws_launch_configuration" "lc" {
   name          = "test_ecs"
   image_id      = data.aws_ami.amazon_linux.id
-  instance_type = "t2.nano"
+  instance_type = "t2.micro"
   lifecycle {
     create_before_destroy = true
   }
