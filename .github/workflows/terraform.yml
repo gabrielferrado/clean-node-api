@@ -14,12 +14,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Build image to ECR
+        uses: kciter/aws-ecr-action@v4
+        with:
+          secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+          repo: ${{ secrets.AWS_ECR_REPO_NAME }}
+          region: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          create_repo: true
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.2.3
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
       - name: Terraform init
         id: init
         run: terraform init -input=false

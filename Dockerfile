@@ -1,5 +1,5 @@
 FROM node:14
-WORKDIR /usr/src/clean-node-api
+WORKDIR /app
 COPY ./package.json .
 RUN npm install --only=prod
 RUN npm i pm2 -g
