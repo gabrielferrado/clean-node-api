@@ -29,7 +29,7 @@ jobs:
           access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           account_id: ${{ secrets.AWS_ACCOUNT_ID }}
           repo: ${{ secrets.AWS_ECR_REPO_NAME }}
-          region: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          region: ${{ secrets.AWS_ECR_REPO_REGION }}
           create_repo: true
 
       - name: Setup Terraform
