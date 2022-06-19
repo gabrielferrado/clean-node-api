@@ -34,7 +34,7 @@ resource "aws_security_group" "lb" {
 
 resource "aws_lb_target_group" "lb_target_group" {
   name        = "masha-target-group"
-  port        = "80"
+  port        = "3000"
   protocol    = "HTTP"
   target_type = "instance"
   vpc_id      = data.aws_vpc.main.id
@@ -50,7 +50,7 @@ resource "aws_lb_target_group" "lb_target_group" {
 
 resource "aws_lb_listener" "web-listener" {
   load_balancer_arn = aws_lb.test-lb.arn
-  port              = "80"
+  port              = "3000"
   protocol          = "HTTP"
   default_action {
     type             = "forward"

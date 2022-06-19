@@ -32,7 +32,7 @@ resource "aws_ecs_task_definition" "task-definition-test" {
 }
 
 resource "aws_ecs_service" "service" {
-  name            = "web-service"
+  name            = "${var.key_name}-service"
   cluster         = aws_ecs_cluster.web-cluster.id
   task_definition = aws_ecs_task_definition.task-definition-test.arn
   desired_count   = 1
@@ -43,18 +43,22 @@ resource "aws_ecs_service" "service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.lb_target_group.arn
     container_name   = "clean-triangles-api"
-    container_port   = 80
+    container_port   = 3000
   }
   # Optional: Allow external changes without Terraform plan difference(for example ASG)
   lifecycle {
     ignore_changes = [desired_count]
   }
   launch_type = "EC2"
-  depends_on  = [aws_lb_listener.web-listener]
+  depends_on  = [
+    aws_lb_listener.web-listener,
+    aws_iam_role.ecs-instance-role,
+    aws_
+  ]
 }
 
 resource "aws_cloudwatch_log_group" "log_group" {
-  name = "/ecs/frontend-container"
+  name = "/ecs/${var.cluster_name}"
   tags = {
     "env"       = "dev"
     "createdBy" = "gabrielferrado"
