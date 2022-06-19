@@ -48,8 +48,8 @@ resource "aws_ecs_service" "service" {
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.lb_target_group.arn
-    container_name   = "clean-triangle-api"
-    container_port   = 3000
+    container_name   = "clean-node-api"
+    container_port   = 80
   }
   # Optional: Allow external changes without Terraform plan difference(for example ASG)
   lifecycle {
@@ -60,7 +60,9 @@ resource "aws_ecs_service" "service" {
     aws_lb_listener.web-listener,
     aws_ecs_task_definition.task-definition-test,
     aws_ecs_cluster.web-cluster,
-    aws_lb_target_group.lb_target_group
+    aws_lb_target_group.lb_target_group,
+    aws_security_group.ec2-sg,
+    aws_security_group.lb
   ]
 }
 

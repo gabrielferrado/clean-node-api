@@ -1,19 +1,19 @@
 [
   {
-    "name": "clean-triangle-api",
-    "image": "450097264690.dkr.ecr.sa-east-1.amazonaws.com/clean-triangle-api:latest",
+    "name": "clean_node_api",
+    "image": "450097264690.dkr.ecr.sa-east-1.amazonaws.com/clean-node-api:latest",
     "cpu": 2,
     "memory": 256,
     "essential": true,
     "portMappings": [
       {
-        "containerPort": 3000
+        "containerPort": 80
       }
     ],
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group" : "/ecs/ecs_triangle_cluster",
+        "awslogs-group" : "/ecs/ecs_clean_node_api",
         "awslogs-region": "us-east-1"
       }
     }
