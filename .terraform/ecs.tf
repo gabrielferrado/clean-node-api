@@ -35,7 +35,7 @@ resource "aws_ecs_service" "service" {
   name            = "web-service"
   cluster         = aws_ecs_cluster.web-cluster.id
   task_definition = aws_ecs_task_definition.task-definition-test.arn
-  desired_count   = 2
+  desired_count   = 1
   ordered_placement_strategy {
     type  = "binpack"
     field = "cpu"
