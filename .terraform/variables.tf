@@ -7,5 +7,5 @@ variable "key_name" {
 variable "cluster_name" {
   type        = string
   description = "The name of AWS ECS cluster"
-  default     = "ecs_clean_node_api_cluster"
+  default     = "ecs-clean-node-api-cluster"
 }
