@@ -11,5 +11,7 @@ describe('CORS Middleware', function () {
       .expect('access-control-allow-origin', '*')
       .expect('access-control-allow-headers', '*')
       .expect('access-control-allow-methods', '*')
+      .expect('keep-alive', 'timeout=2, max=100')
+      .expect('connection', 'keep-alive')
   })
 })
