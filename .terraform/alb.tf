@@ -3,6 +3,8 @@ resource "aws_lb" "test-lb" {
   load_balancer_type = "application"
   internal           = false
   subnets            = module.vpc.public_subnets
+  idle_timeout       = 400
+
   tags = {
     "env"       = "dev"
     "createdBy" = "gabrielferrado"

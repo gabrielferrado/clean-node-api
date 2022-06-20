@@ -25,6 +25,7 @@ jobs:
 
       - name: Build image to ECR
         uses: kciter/aws-ecr-action@v4
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         with:
           secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}

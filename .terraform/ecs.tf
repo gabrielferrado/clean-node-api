@@ -7,6 +7,7 @@ resource "aws_ecs_cluster" "web-cluster" {
   }
   depends_on = [
     aws_ecs_capacity_provider.test,
+    aws_autoscaling_group.asg,
   ]
 }
 
@@ -21,9 +22,6 @@ resource "aws_ecs_capacity_provider" "test" {
       target_capacity = 85
     }
   }
-  depends_on = [
-    aws_autoscaling_group.asg,
-  ]
 }
 
 # update file container-def, so it's pulling image from ecr
@@ -41,7 +39,7 @@ resource "aws_ecs_service" "service" {
   name            = "${var.key_name}-service"
   cluster         = aws_ecs_cluster.web-cluster.id
   task_definition = aws_ecs_task_definition.task-definition-test.arn
-  desired_count   = 1
+  desired_count   = 10
   ordered_placement_strategy {
     type  = "binpack"
     field = "cpu"
@@ -76,7 +74,7 @@ resource "aws_cloudwatch_log_group" "log_group" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "health" {
-  alarm_name          = "${var.key_name}_healthy_host"
+  alarm_name          = "${var.key_name}-healthy-host"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "HealthyHostCount"
@@ -90,4 +88,21 @@ resource "aws_cloudwatch_metric_alarm" "health" {
     LoadBalancer = aws_lb.test-lb.arn_suffix
     TargetGroup  = aws_lb_target_group.lb_target_group.arn_suffix
   }
+}
+
+resource "aws_cloudwatch_metric_alarm" "cpualarm" {
+  alarm_name          = "${var.key_name}-cpu-alarm"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = "120"
+  statistic           = "Average"
+  threshold           = "60"
+
+  dimensions = {
+    AutoScalingGroupName = aws_autoscaling_group.asg.name
+  }
+
+  alarm_description = "This metric monitor EC2 instance cpu utilization"
 }

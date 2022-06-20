@@ -2,7 +2,7 @@
   {
     "name": "clean-node-api",
     "image": "450097264690.dkr.ecr.us-east-1.amazonaws.com/clean-node-api:latest",
-    "cpu": 2,
+    "cpu": 10,
     "memory": 256,
     "essential": true,
     "portMappings": [
