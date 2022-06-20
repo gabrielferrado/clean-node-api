@@ -3,6 +3,7 @@ name: Terraform
 on:
   push:
     branches: [ "master" ]
+  pull_request:
 
 jobs:
   build:
@@ -55,7 +56,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -no-color -var="key_name=ecs_triangles" -var="cluster_name=ecs_triangle_cluster"
+        run: terraform plan -no-color
         continue-on-error: true
 
       - name: Update Pull Request
@@ -93,4 +94,4 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-        run: terraform apply -auto-approve -var="key_name=ecs_triangles" -var="cluster_name=ecs_triangle_cluster"
+        run: terraform apply -auto-approve
