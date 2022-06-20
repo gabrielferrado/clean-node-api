@@ -4,5 +4,7 @@ export const cors = (req: Request, res: Response, next: NextFunction): void => {
   res.set('access-control-allow-origin', '*')
   res.set('access-control-allow-headers', '*')
   res.set('access-control-allow-methods', '*')
+  res.set('keep-alive', 'timeout=2, max=100')
+  res.set('connection', 'keep-alive')
   next()
 }
