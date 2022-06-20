@@ -9,7 +9,7 @@ MongoHelper.connect(env.mongoUrl)
       env.port,
       () => console.log(`Server started on http://localhost:${env.port}`)
     )
-    server.keepAliveTimeout = 65000
-    server.headersTimeout = 66000
+    server.keepAliveTimeout = 121 * 1000
+    server.headersTimeout = 125 * 1000
   })
   .catch(e => (console.error({ error: e.message, updatedAt: new Date().toUTCString() })))
