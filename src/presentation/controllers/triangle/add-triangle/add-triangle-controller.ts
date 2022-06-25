@@ -3,11 +3,11 @@ import {
   Controller,
   HttpRequest,
   HttpResponse,
+  InvalidParamError,
+  TriangleValidator,
   Validator
 } from './add-triangle-controller-protocols'
-import { badRequest, ok, serverError } from '../../../helpers/http/http-helpers'
-import { TriangleValidator } from '../../../../validation/protocols/triangle-validator'
-import { InvalidParamError } from '../../../errors'
+import { badRequest, ok, serverError } from '@/presentation/helpers/http/http-helpers'
 
 export class AddTriangleController implements Controller {
   constructor (

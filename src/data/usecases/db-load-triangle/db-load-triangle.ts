@@ -1,6 +1,4 @@
-import { LoadTriangle } from '../../../domain/usecases/load-triangle'
-import { TriangleModel } from '../../../domain/models/triangle'
-import { LoadTriangleRepository } from '../../protocols/db/triangle/load-triangle-repository'
+import { LoadTriangleRepository, TriangleModel, LoadTriangle } from './db-load-triangle-protocols'
 
 export class DbLoadTriangle implements LoadTriangle {
   constructor (

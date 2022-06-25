@@ -1,8 +1,8 @@
-import { AddTriangleRepository } from '../../../../data/protocols/db/triangle/add-triangle-repository'
-import { AddTriangleModel } from '../../../../domain/usecases/add-triangle'
-import { TriangleModel } from '../../../../domain/models/triangle'
+import { AddTriangleRepository } from '@/data/protocols/db/triangle/add-triangle-repository'
+import { AddTriangleModel } from '@/domain/usecases/add-triangle'
+import { TriangleModel } from '@/domain/models/triangle'
 import { MongoHelper } from '../helpers/mongo-helper'
-import { LoadTriangleRepository } from '../../../../data/protocols/db/triangle/load-triangle-repository'
+import { LoadTriangleRepository } from '@/data/protocols/db/triangle/load-triangle-repository'
 
 export class TriangleMongoRepository implements AddTriangleRepository, LoadTriangleRepository {
   async add (triangleData: AddTriangleModel): Promise<TriangleModel> {

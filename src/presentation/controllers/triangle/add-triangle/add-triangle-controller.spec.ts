@@ -2,14 +2,16 @@ import { AddTriangleController } from './add-triangle-controller'
 import {
   AddTriangle,
   AddTriangleModel,
+  InvalidParamError,
+  ServerError,
+  Sides,
   TriangleModel,
   TriangleTypes,
+  TriangleValidator,
   Validator
 } from './add-triangle-controller-protocols'
-import { badRequest, ok, serverError } from '../../../helpers/http/http-helpers'
-import { InvalidParamError, ServerError } from '../../../errors'
-import { Sides, TriangleValidator } from '../../../../validation/protocols/triangle-validator'
 import mockdate from 'mockdate'
+import { badRequest, ok, serverError } from '@/presentation/helpers/http/http-helpers'
 
 const VALID_BODY = {
   side1: 1,

@@ -1,5 +1,5 @@
-import app from '../config/app'
 import request from 'supertest'
+import app from '@/main/config/app'
 
 describe('CORS Middleware', function () {
   test('Should enable CORS', async () => {

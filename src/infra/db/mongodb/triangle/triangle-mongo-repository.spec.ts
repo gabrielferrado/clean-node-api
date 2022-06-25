@@ -1,8 +1,8 @@
-import { MongoHelper } from '../helpers/mongo-helper'
-import { TriangleMongoRepository } from './triangle-mongo-repository'
 import { Collection } from 'mongodb'
 import * as mockdate from 'mockdate'
-import { TriangleTypes } from '../../../../domain/models/triangle'
+import { MongoHelper } from '../helpers/mongo-helper'
+import { TriangleMongoRepository } from './triangle-mongo-repository'
+import { TriangleTypes } from '@/domain/models/triangle'
 
 const VALID_TRIANGLE_SCALENE = {
   type: TriangleTypes.SCALENE,

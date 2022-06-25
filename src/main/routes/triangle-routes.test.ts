@@ -1,10 +1,10 @@
-import app from '../config/app'
 import request from 'supertest'
-import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
 import { Collection } from 'mongodb'
 import { sign } from 'jsonwebtoken'
-import env from '../config/env'
+import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
 import { TriangleTypes } from '@/domain/models/triangle'
+import env from '@/main/config/env'
+import app from '@/main/config/app'
 
 let triangleCollection: Collection
 let accountCollection: Collection

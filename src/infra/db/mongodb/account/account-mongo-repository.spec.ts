@@ -1,7 +1,7 @@
 import { MongoHelper } from '../helpers/mongo-helper'
 import { AccountMongoRepository } from './account-mongo-repository'
 import { Collection } from 'mongodb'
-import { AccountModel } from '../../../../domain/models/account'
+import { AccountModel } from '@/domain/models/account'
 
 const ACCOUNT_DATA = {
   name: 'any_name',

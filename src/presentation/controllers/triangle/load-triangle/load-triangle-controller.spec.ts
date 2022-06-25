@@ -1,12 +1,12 @@
+import * as mockdate from 'mockdate'
 import { LoadTriangleController } from './load-triangle-controller'
 import {
   LoadTriangle,
+  ServerError,
   TriangleModel,
   TriangleTypes
 } from './load-triangle-controller-protocols'
-import { noContent, ok, serverError } from '../../../helpers/http/http-helpers'
-import { ServerError } from '../../../errors'
-import * as mockdate from 'mockdate'
+import { noContent, ok, serverError } from '@/presentation/helpers/http/http-helpers'
 
 const makeFakeTriangles = (): TriangleModel[] => {
   return [

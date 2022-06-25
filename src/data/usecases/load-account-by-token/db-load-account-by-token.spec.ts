@@ -1,8 +1,5 @@
-import { AccountModel } from '../../../domain/models/account'
 import { DbLoadAccountByToken } from './db-load-account-by-token'
-import { Decryptor } from '../../protocols/criptography/decryptor'
-import { LoadAccountByTokenRepository } from '../../protocols/db/account/load-account-by-token-repository'
-import { DecryptorPayload } from '../../protocols/criptography/decryptor-payload'
+import { AccountModel, LoadAccountByTokenRepository, Decryptor, DecryptorPayload } from './db-load-account-by-token-protocols'
 
 const VALID_ACCOUNT = {
   email: 'any_email',

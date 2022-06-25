@@ -1,4 +1,4 @@
-import { TriangleModel, TriangleTypes } from '../models/triangle'
+import { TriangleModel, TriangleTypes } from '@/domain/models/triangle'
 
 export interface AddTriangleModel {
   type: TriangleTypes
