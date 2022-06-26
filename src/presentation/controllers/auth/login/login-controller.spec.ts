@@ -1,7 +1,7 @@
 import { LoginController } from './login-controller'
 import { Authenticator, AuthenticatorModel, Validator } from './login-controller-protocols'
-import { badRequest, ok, serverError, unauthorized } from '../../../helpers/http/http-helpers'
-import { MissingParamError } from '../../../errors'
+import { badRequest, ok, serverError, unauthorized } from '@/presentation/helpers/http/http-helpers'
+import { MissingParamError } from '@/presentation/errors'
 
 const VALID_BODY = {
   email: 'any_email@mail.com',

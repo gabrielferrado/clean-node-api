@@ -1,5 +1,5 @@
-import { Sides, TriangleValidator } from '../protocols/triangle-validator'
-import { InvalidParamError } from '../../presentation/errors'
+import { Sides, TriangleValidator } from '@/validation/protocols/triangle-validator'
+import { InvalidParamError } from '@/presentation/errors'
 
 export class TriangleSidesValidator {
   constructor (private readonly triangleValidator: TriangleValidator) {}

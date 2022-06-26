@@ -1,7 +1,5 @@
 import { DbLoadTriangle } from './db-load-triangle'
-import { TriangleModel, TriangleTypes } from '../../../domain/models/triangle'
-import { LoadTriangleRepository } from '../../protocols/db/triangle/load-triangle-repository'
-import { LoadTriangle } from '../../../domain/usecases/load-triangle'
+import { LoadTriangleRepository, TriangleModel, TriangleTypes, LoadTriangle } from './db-load-triangle-protocols'
 
 const makeFakeTriangles = (): TriangleModel[] => {
   return [

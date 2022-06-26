@@ -1,6 +1,6 @@
-import { Sides, TriangleValidator } from '../../validation/protocols/triangle-validator'
-import { AddTriangleModel } from '../../domain/usecases/add-triangle'
-import { TriangleTypes } from '../../domain/models/triangle'
+import { Sides, TriangleValidator } from '@/validation/protocols/triangle-validator'
+import { AddTriangleModel } from '@/domain/usecases/add-triangle'
+import { TriangleTypes } from '@/domain/models/triangle'
 
 const toInteger = (value: any): number => {
   return parseInt(value, 10)

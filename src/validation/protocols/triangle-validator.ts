@@ -1,4 +1,4 @@
-import { AddTriangleModel } from '../../domain/usecases/add-triangle'
+import { AddTriangleModel } from '@/domain/usecases/add-triangle'
 
 export interface Sides {
   side1: number

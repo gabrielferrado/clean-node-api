@@ -1,7 +1,7 @@
-import { ValidatorComposite , RequiredFieldValidator } from '../../../../../validation/validators'
-import { Validator } from '../../../../../presentation/protocols'
-import { TriangleSidesValidator } from '../../../../../validation/validators/triangle-sides-validator'
-import { TriangleValidatorAdapter } from '../../../../../infra/validators/triangle-validator-adapter'
+import { ValidatorComposite , RequiredFieldValidator } from '@/validation/validators'
+import { Validator } from '@/presentation/protocols'
+import { TriangleSidesValidator } from '@/validation/validators/triangle-sides-validator'
+import { TriangleValidatorAdapter } from '@/infra/validators/triangle-validator-adapter'
 
 export const makeAddTriangleValidator = (): ValidatorComposite => {
   const validations: Validator[] = []

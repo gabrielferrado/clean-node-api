@@ -4,7 +4,7 @@ import {
   HttpResponse,
   LoadTriangle
 } from './load-triangle-controller-protocols'
-import { noContent, ok, serverError } from '../../../helpers/http/http-helpers'
+import { noContent, ok, serverError } from '@/presentation/helpers/http/http-helpers'
 
 export class LoadTriangleController implements Controller {
   constructor (
